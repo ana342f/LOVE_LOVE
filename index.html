@@ -73,6 +73,22 @@
     50% { opacity: 1; }
     100% { transform: translateY(-50px) scale(1); opacity: 0; }
   }
+
+  /* Мобильная версия */
+  @media (max-width: 480px) {
+    h1 {
+      font-size: 2em;
+    }
+    input, button {
+      width: 90%;
+      font-size: 1.5em;
+      padding: 18px;
+    }
+    #quest h2, #quest p, #message {
+      font-size: 1.8em;
+      text-align: center;
+    }
+  }
 </style>
 </head>
 <body>
@@ -89,6 +105,7 @@
 <script>
 let step = 1;
 
+// Правильные ответы
 const answers = {
   1: "7 декабря",
   2: "15 февраля",
@@ -97,6 +114,7 @@ const answers = {
   5: "южный"
 };
 
+// Вопросы
 const questions = {
   1: "1️⃣ Когда мы познакомились?",
   2: "2️⃣ Когда начались наши отношения?",
@@ -105,24 +123,22 @@ const questions = {
   5: "5️⃣ Город нашего первого совместного моря?"
 };
 
-const predictions = [
-  "🎉 В этом году вас ждёт весёлое путешествие вместе! ✈️",
-  "👶 Маленький сюрприз в вашей семье скоро появится!",
-  "💍 Год обещает романтичные моменты и новые совместные цели!",
-  "😄 Смех, счастье и уютные вечера гарантированы 💖",
-  "🍫 Любовь будет сладкой, как шоколад!",
-  "📩 Напиши в Telegram слово 'Валентин' и дома тебя будет ждать сюрприз! 🎁"
-];
-
+// Проверка ответа
 function checkAnswer(num) {
   const input = document.getElementById('q'+num).value.trim().toLowerCase();
   if(input === answers[num]) {
     step++;
     if(step > 5) {
-      const pred = predictions[Math.floor(Math.random() * predictions.length)];
-      document.getElementById('quest').innerHTML = `<h2>Поздравляю! 🎉</h2><p>Ты ответил на все вопросы!</p><p>${pred}</p>`;
+      // Конец квеста с предсказанием
+      const pred = "📩 Напиши в Telegram слово 'влаентин' и дома тебя будет ждать сюрприз! 🎁";
+      document.getElementById('quest').innerHTML = `
+        <h2>Поздравляю! 🎉</h2>
+        <p>Ты ответил на все вопросы!</p>
+        <p style="font-size:1.6em; font-weight:bold; text-align:center;">${pred}</p>
+      `;
       document.getElementById('message').innerText = "";
     } else {
+      // Следующий вопрос
       document.getElementById('quest').innerHTML = `
         <p>${questions[step]}</p>
         <input type="text" id="q${step}" placeholder="Ответ">
@@ -135,6 +151,7 @@ function checkAnswer(num) {
   }
 }
 
+// Плавающие сердечки и поцелуйчики
 function createFloating() {
   const floating = document.createElement('div');
   floating.className = 'floating';
