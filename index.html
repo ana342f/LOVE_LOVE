@@ -22,37 +22,48 @@
     color: #ff1493;
     text-shadow: 2px 2px 6px #ff69b4;
     text-align: center;
+    font-size: 2.2em;
+    margin-bottom: 20px;
   }
 
   input {
-    padding: 10px;
-    font-size: 1em;
+    padding: 15px;
+    font-size: 1.2em;
     margin: 10px 0;
+    width: 80%;
+    max-width: 300px;
+    border-radius: 10px;
+    border: 2px solid #ff69b4;
   }
 
   button {
-    padding: 10px 20px;
-    font-size: 1em;
+    padding: 15px 25px;
+    font-size: 1.2em;
     margin: 10px;
     cursor: pointer;
     border: none;
-    border-radius: 8px;
+    border-radius: 12px;
     background: #ff69b4;
     color: white;
-    box-shadow: 2px 2px 6px #ff1493;
+    box-shadow: 2px 2px 8px #ff1493;
+    transition: transform 0.2s;
+  }
+
+  button:hover {
+    transform: scale(1.05);
   }
 
   #message {
     margin-top: 20px;
-    font-size: 1.2em;
+    font-size: 1.4em;
     color: #c71585;
     text-align: center;
-    max-width: 500px;
+    max-width: 90%;
   }
 
   .floating {
     position: absolute;
-    font-size: 20px;
+    font-size: 25px;
     animation: floatUp 5s linear infinite;
     user-select: none;
   }
@@ -76,7 +87,6 @@
 <div id="message"></div>
 
 <script>
-// История и ответы
 let step = 1;
 
 const answers = {
@@ -95,13 +105,13 @@ const questions = {
   5: "5️⃣ Город нашего первого совместного моря?"
 };
 
-// Предсказания на год
 const predictions = [
   "🎉 В этом году вас ждёт весёлое путешествие вместе! ✈️",
   "👶 Маленький сюрприз в вашей семье скоро появится!",
   "💍 Год обещает романтичные моменты и новые совместные цели!",
   "😄 Смех, счастье и уютные вечера гарантированы 💖",
-  "🍫 Любовь будет сладкой, как шоколад!"
+  "🍫 Любовь будет сладкой, как шоколад!",
+  "📩 Напиши в Telegram слово 'Валентин' и дома тебя будет ждать сюрприз! 🎁"
 ];
 
 function checkAnswer(num) {
@@ -109,12 +119,10 @@ function checkAnswer(num) {
   if(input === answers[num]) {
     step++;
     if(step > 5) {
-      // Конец квеста с предсказанием
       const pred = predictions[Math.floor(Math.random() * predictions.length)];
       document.getElementById('quest').innerHTML = `<h2>Поздравляю! 🎉</h2><p>Ты ответил на все вопросы!</p><p>${pred}</p>`;
       document.getElementById('message').innerText = "";
     } else {
-      // Следующий вопрос
       document.getElementById('quest').innerHTML = `
         <p>${questions[step]}</p>
         <input type="text" id="q${step}" placeholder="Ответ">
@@ -127,13 +135,11 @@ function checkAnswer(num) {
   }
 }
 
-// Создаем плавающие сердца и поцелуйчики
 function createFloating() {
   const floating = document.createElement('div');
   floating.className = 'floating';
   floating.style.left = Math.random() * window.innerWidth + 'px';
-  floating.style.fontSize = 15 + Math.random() * 20 + 'px';
-  // Выбираем сердечко или поцелуйчик
+  floating.style.fontSize = 20 + Math.random() * 25 + 'px';
   const emojis = ['❤️','💋','💖','💕'];
   floating.innerText = emojis[Math.floor(Math.random() * emojis.length)];
   floating.style.animationDuration = 3 + Math.random() * 3 + 's';
