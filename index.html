@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Valentine Quest ❤️</title>
+<style>
+  body {
+    margin: 0;
+    font-family: 'Comic Sans MS', cursive, sans-serif;
+    background: linear-gradient(135deg, #ffb6c1, #ffe4e1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    min-height: 100vh;
+    padding: 20px;
+    overflow: hidden;
+  }
+
+  h1 {
+    color: #ff1493;
+    text-shadow: 2px 2px 6px #ff69b4;
+    text-align: center;
+  }
+
+  input {
+    padding: 10px;
+    font-size: 1em;
+    margin: 10px 0;
+  }
+
+  button {
+    padding: 10px 20px;
+    font-size: 1em;
+    margin: 10px;
+    cursor: pointer;
+    border: none;
+    border-radius: 8px;
+    background: #ff69b4;
+    color: white;
+    box-shadow: 2px 2px 6px #ff1493;
+  }
+
+  #message {
+    margin-top: 20px;
+    font-size: 1.2em;
+    color: #c71585;
+    text-align: center;
+    max-width: 500px;
+  }
+
+  .floating {
+    position: absolute;
+    font-size: 20px;
+    animation: floatUp 5s linear infinite;
+    user-select: none;
+  }
+
+  @keyframes floatUp {
+    0% { transform: translateY(100vh) scale(0.5); opacity: 0.7; }
+    50% { opacity: 1; }
+    100% { transform: translateY(-50px) scale(1); opacity: 0; }
+  }
+</style>
+</head>
+<body>
+
+<h1>Valentine Quest ❤️</h1>
+<div id="quest">
+  <p>1️⃣ Когда мы познакомились?</p>
+  <input type="text" id="q1" placeholder="дд месяц">
+  <button onclick="checkAnswer(1)">Ответить</button>
+</div>
+
+<div id="message"></div>
+
+<script>
+// История и ответы
+let step = 1;
+
+const answers = {
+  1: "7 декабря",
+  2: "15 февраля",
+  3: "виновник",
+  4: "пиво",
+  5: "южный"
+};
+
+const questions = {
+  1: "1️⃣ Когда мы познакомились?",
+  2: "2️⃣ Когда начались наши отношения?",
+  3: "3️⃣ Наше любимое кафе?",
+  4: "4️⃣ Наш любимый напиток?",
+  5: "5️⃣ Город нашего первого совместного моря?"
+};
+
+// Предсказания на год
+const predictions = [
+  "🎉 В этом году вас ждёт весёлое путешествие вместе! ✈️",
+  "👶 Маленький сюрприз в вашей семье скоро появится!",
+  "💍 Год обещает романтичные моменты и новые совместные цели!",
+  "😄 Смех, счастье и уютные вечера гарантированы 💖",
+  "🍫 Любовь будет сладкой, как шоколад!"
+];
+
+function checkAnswer(num) {
+  const input = document.getElementById('q'+num).value.trim().toLowerCase();
+  if(input === answers[num]) {
+    step++;
+    if(step > 5) {
+      // Конец квеста с предсказанием
+      const pred = predictions[Math.floor(Math.random() * predictions.length)];
+      document.getElementById('quest').innerHTML = `<h2>Поздравляю! 🎉</h2><p>Ты ответил на все вопросы!</p><p>${pred}</p>`;
+      document.getElementById('message').innerText = "";
+    } else {
+      // Следующий вопрос
+      document.getElementById('quest').innerHTML = `
+        <p>${questions[step]}</p>
+        <input type="text" id="q${step}" placeholder="Ответ">
+        <button onclick="checkAnswer(${step})">Ответить</button>
+      `;
+      document.getElementById('message').innerText = "Правильно! Продолжаем...";
+    }
+  } else {
+    document.getElementById('message').innerText = "Не правильно, попробуй ещё раз 😉";
+  }
+}
+
+// Создаем плавающие сердца и поцелуйчики
+function createFloating() {
+  const floating = document.createElement('div');
+  floating.className = 'floating';
+  floating.style.left = Math.random() * window.innerWidth + 'px';
+  floating.style.fontSize = 15 + Math.random() * 20 + 'px';
+  // Выбираем сердечко или поцелуйчик
+  const emojis = ['❤️','💋','💖','💕'];
+  floating.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+  floating.style.animationDuration = 3 + Math.random() * 3 + 's';
+  document.body.appendChild(floating);
+  setTimeout(() => floating.remove(), 5000);
+}
+
+setInterval(createFloating, 200);
+</script>
+
+</body>
+</html>
